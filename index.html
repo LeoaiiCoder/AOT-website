@@ -71,6 +71,8 @@
     Sign in with Google
 </button>
 
+<p id="userInfo"></p>
+
 
     <script type="module">
 
@@ -86,7 +88,8 @@ import {
 import {
   getAuth,
   GoogleAuthProvider,
-  signInWithPopup
+  signInWithPopup,
+  onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
 
@@ -106,6 +109,24 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
+
+onAuthStateChanged(auth, (user) => {
+
+    if (user) {
+
+        document.getElementById("userInfo").textContent =
+            "Signed in as: " + user.email;
+
+        console.log(user.uid);
+
+    } else {
+
+        document.getElementById("userInfo").textContent =
+            "Not signed in";
+
+    }
+
+});
 
 
 
