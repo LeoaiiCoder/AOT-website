@@ -67,7 +67,71 @@
         <button>Season 4</button>
     </a>
 
+    <button id="loginBtn">
+    Sign in with Google
+</button>
+
+
+    <script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc
+  
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBRHPWG_sMnVaME60xZihO60BKLwMVywlA",
+  authDomain: "aot-website-notes-saveup.firebaseapp.com",
+  projectId: "aot-website-notes-saveup",
+  storageBucket: "aot-website-notes-saveup.firebasestorage.app",
+  messagingSenderId: "1038588539631",
+  appId: "1:1038588539631:web:570905d32198ec0dee611a",
+  measurementId: "G-ZRPXM1B7VY"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+
+
+
+
+
+
+
+
+
+const loginBtn = document.getElementById("loginBtn");
+
+loginBtn.addEventListener("click", async function () {
+
+    const result = await signInWithPopup(auth, provider);
+
+    const user = result.user;
+
+    alert("Signed in as " + user.email);
+
+});
+
+</script>
 
 </body>
+
+
+
 
 </html>
