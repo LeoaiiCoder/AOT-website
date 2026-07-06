@@ -269,9 +269,15 @@ onAuthStateChanged(auth, async (user) => {
 
     notes.addEventListener("input", async function () {
 
-        await setDoc(docRef, {
-            notes: notes.value
-        });
+    console.log("Saving:", notes.value);
+
+    await setDoc(docRef, {
+        notes: notes.value
+    });
+
+    console.log("Saved!");
+
+});
 
     });
 
