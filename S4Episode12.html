@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Episode 12</title>
+
+    <style>
+
+        button{
+
+        width: 200px;
+        height: 60px;
+
+        font-size: 20px;
+
+        margin: 10px;
+        
+        background-color: darkred;
+        color: aliceblue;
+
+        border: none;
+        cursor: pointer;
+    }
+
+    button:hover{
+        background-color: crimson;
+
+    }
+        body{ 
+
+        background-image:url("background.png");
+
+        background-size: cover;
+        background-position: center ;
+        background-repeat: no-repeat;
+         height: 100vh;
+    margin: 0;
+
+        color: black;
+         text-align: center;
+    }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: crimson;
+        }
+
+        .section {
+            background-color: #1c1c1c;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        textarea {
+            width: 90%;
+            height: 200px;
+            background-color: #000;
+            color: white;
+            border: 1px solid gray;
+            padding: 10px;
+            font-size: 16px;
+            resize: vertical;
+        }
+
+        input[type="file"] {
+            margin-top: 10px;
+        }
+
+        img {
+            width: 100%;
+            margin-top: 10px;
+            border-radius: 8px;
+        }
+    </style>
+
+</head>
+
+<body>
+    
+<audio id="Red" loop>
+    <source src="Red Swan.mp3" type="audio/mpeg">
+</audio>
+
+<button onclick=" let music =document.getElementById('Red'); 
+
+if(music.paused )
+{
+     let songs = document.querySelectorAll('audio');
+     songs.forEach(function(song)
+      {
+    song.pause();
+    song.currentTime=0;
+})
+
+    music.play();
+}
+ else{
+    
+    music.pause();
+     
+ }
+
+ 
+">
+    ▶ Red Swan
+</button>
+  
+  
+
+
+ <audio id="aii" loop>
+    <source src="AOT4ED1.mp3" type="audio/mpeg">
+</audio>
+
+<button onclick=" let music1 =document.getElementById('aii')
+
+if(music1.paused )
+{
+    
+      let songs = document.querySelectorAll('audio');
+     songs.forEach(function(song)
+      {
+    song.pause();
+    song.currentTime=0;
+})
+
+
+
+    
+    music1.play();
+}
+else{
+    
+    music1.pause();
+    music1.currentTime=0;
+}
+
+">
+    ▶ AOT4ED1
+</button>
+
+
+<audio id="LALA" loop>
+    <source src="Lalala.mp3" type="audio/mpeg">
+</audio>
+
+<button onclick=" let music2 =document.getElementById('LALA')
+
+if(music2.paused )
+{
+    
+      let songs = document.querySelectorAll('audio');
+     songs.forEach(function(song)
+      {
+    song.pause();
+    song.currentTime=0;
+})
+
+
+
+    
+    music2.play();
+}
+else{
+    
+    music2.pause();
+    music2.currentTime=0;
+}
+
+">
+    ▶ AOT2LalaOST
+</button>
+
+<div class="container">
+
+    <h1>Episode12 (Guides)</h1>
+
+    <!-- NOTES SECTION -->
+    <div class="section">
+        <h2>Your Notes</h2>
+        <textarea placeholder="Write everything you understood about this episode..."></textarea>
+    </div>
+
+    <!-- SCREENSHOTS SECTION -->
+    <div class="section">
+        <h2>Screenshots</h2>
+
+        <input type="file" accept="image/*" onchange="loadImage(event)">
+
+        <img id="output" />
+
+    </div>
+
+</div>
+
+<script>
+function loadImage(event) {
+    const image = document.getElementById('output');
+    image.src = URL.createObjectURL(event.target.files[0]);
+}
+</script>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+import {
+  getAuth,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBRHPWG_sMnVaME60xZihO60BKLwMVywlA",
+  authDomain: "aot-website-notes-saveup.firebaseapp.com",
+  projectId: "aot-website-notes-saveup",
+  storageBucket: "aot-website-notes-saveup.firebasestorage.app",
+  messagingSenderId: "1038588539631",
+  appId: "1:1038588539631:web:570905d32198ec0dee611a",
+  measurementId: "G-ZRPXM1B7VY"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+const notes = document.getElementById("notes");
+
+onAuthStateChanged(auth, async (user) => {
+
+    if (!user) {
+
+        alert("Please sign in first.");
+        window.location.href = "index.html";
+        return;
+
+    }
+
+    console.log("UID:", user.uid);
+
+    const docRef = doc(
+        db,
+        "users",
+        user.uid,
+        "episodes",
+        "S4episode12"
+    );
+
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        notes.value = docSnap.data().notes;
+    }
+
+    notes.addEventListener("input", async function () {
+
+        await setDoc(docRef, {
+            notes: notes.value
+        });
+
+    });
+
+});
+
+</script>
+
+<a href="index.html">
+   <button>
+     Home
+   </button> 
+</a>
+
+</body>
+
+</html>
