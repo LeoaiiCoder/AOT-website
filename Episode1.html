@@ -226,7 +226,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBRHPWG_sMnVaME60xZihO60BKLwMVywlA",
+  apiKey: "YOUR_API_KEY",
   authDomain: "aot-website-notes-saveup.firebaseapp.com",
   projectId: "aot-website-notes-saveup",
   storageBucket: "aot-website-notes-saveup.firebasestorage.app",
@@ -244,11 +244,9 @@ const notes = document.getElementById("notes");
 onAuthStateChanged(auth, async (user) => {
 
     if (!user) {
-
         alert("Please sign in first.");
         window.location.href = "index.html";
         return;
-
     }
 
     console.log("UID:", user.uid);
@@ -269,17 +267,15 @@ onAuthStateChanged(auth, async (user) => {
 
     notes.addEventListener("input", async function () {
 
-    console.log("Saving:", notes.value);
+        console.log("Saving:", notes.value);
 
-    await setDoc(docRef, {
-        notes: notes.value
+        await setDoc(docRef, {
+            notes: notes.value
+        });
+
+        console.log("Saved!");
+
     });
-
-    console.log("Saved!");
-
-});
-
-   
 
 });
 
